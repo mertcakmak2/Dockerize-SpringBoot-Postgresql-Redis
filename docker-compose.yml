@@ -17,6 +17,15 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5051:80"
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_vol:/var/lib/redis/data
   app:
     container_name: dockerizeapp
     build: .
@@ -28,3 +37,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
     depends_on:
       - db
+
+volumes:
+  redis_vol:
