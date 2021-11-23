@@ -7,6 +7,8 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
       POSTGRES_DB: userdatabase
+    # expose:
+    #   - "5433"
     ports:
       - "5433:5433"
   pgadmin:
@@ -26,8 +28,8 @@ services:
       - "6379:6379"
     volumes:
       - redis_vol:/var/lib/redis/data
-  app:
-    container_name: dockerizeapp
+  springapp:
+    container_name: springapp
     build: .
     ports:
       - "5005:5005"
@@ -35,6 +37,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db/userdatabase
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      DB_HOST: db
     depends_on:
       - db
 
